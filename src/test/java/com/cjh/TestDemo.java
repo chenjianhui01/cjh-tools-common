@@ -1,5 +1,6 @@
 package com.cjh;
 
+import com.cjh.domain.Student;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +19,15 @@ public class TestDemo {
 
     @Test
     public void HelloTest() {
+        log.info("日志：Hello world");
         System.out.println("Hello world");
+    }
+
+    @Test
+    public void StudentTest() {
+        Student student = new Student();
+        student.setName("cjh");
+        System.out.println(student.toString());
     }
 
 }
