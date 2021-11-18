@@ -1,5 +1,6 @@
 package com.cjh.Utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -64,5 +65,22 @@ public class TimeUtils {
             dates.add(parse);
         }
         return dates;
+    }
+
+
+
+    /**
+     * 对传入的时间字符串格式化，如：2021-11-18 10:23:45 ――> 2021-11-18 10:00:00
+     * @param timeStr
+     * @return
+     */
+    public static Date stringTimeFormat(String timeStr) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date parse = sdf.parse(timeStr);
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
+        String format = sdf2.format(parse);
+        Date time = sdf.parse(format);
+        return time;
+
     }
 }
