@@ -1,5 +1,6 @@
 package com.cjh;
 
+import com.cjh.Utils.DictUtil;
 import com.cjh.Utils.TimeUtils;
 import com.cjh.domain.Student;
 import lombok.extern.slf4j.Slf4j;
@@ -8,8 +9,13 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description:
@@ -42,7 +48,40 @@ public class TestDemo {
         System.out.println(to);
         long gap = to.getTime() - from.getTime();
         long hour = gap / (60 * 60 * 1000) + 1;
-        System.out.println(hour);
+        System.out.println("查询的小时个数为：" + hour);
+    }
+
+    @Test
+    public void FileReadTest() {
+//        Map<String, String> map = DictUtil.getSmsFailReasonCodeMap();
+//        System.out.println(map);
+
+        Map<String, String> smsFailReasonCodeMap;
+        try(BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(DictUtil.class.getResourceAsStream("/dict/sms_fail_reason.txt"))))  {
+            String line;
+            smsFailReasonCodeMap=new HashMap<>();
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.length() < 1) {
+                    continue;
+                }
+                String[] items = line.trim().split(" ");
+                if (items.length == 2) {
+                    smsFailReasonCodeMap.put(items[0], items[1]);
+                }
+            }
+        }catch (IOException e) {
+            throw new RuntimeException("Error occurred wile loading SMS_FAIL_REASON_CODE_MAP. ", e);
+        }
+        System.out.println(smsFailReasonCodeMap);
+
+    }
+    @Test
+    public void Test1129() {
+        Long a = 2L;
+        Long sum = 1L;
+        sum += a != null? a:0L;
+        System.out.println(sum);
     }
 
 }
